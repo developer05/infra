@@ -1,0 +1,14 @@
+[Unit]
+Description=Catalog HTTP Server
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/home/appuser/skeleton4/.env
+User=appuser
+WorkingDirectory=/home/appuser/skeleton4
+ExecStart=/usr/bin/php bin/console server:run 0.0.0.0:8080
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
