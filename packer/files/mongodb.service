@@ -1,0 +1,17 @@
+[Unit]
+Description=High-performance, schema-free document-oriented database
+After=network.target
+
+[Service]
+Type=simple
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/lib/mongod
+ExecStartPre=/bin/chown mongodb:mongodb /var/lib/mongod
+ExecStart=/usr/bin/mongod --config /etc/mongod.conf
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+User=mongodb
+Group=mongodb
+
+[Install]
+WantedBy=multi-user.target

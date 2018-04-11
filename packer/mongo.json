@@ -1,6 +1,6 @@
 {
 	"variables": {
-		"project_id": "otus-devops-200205",
+		"project_id": "infra-200312",
 		"source_image": "ubuntu-1604-xenial-v20180323",
 		"machine_type": "f1-micro"
 	},
@@ -8,18 +8,17 @@
 		{
 			"type": "googlecompute",
 			"project_id": "{{user `project_id`}}",
-			"image_name": "php-base-{{timestamp}}",
+			"image_name": "mongodb-base-{{timestamp}}",
 			"source_image": "{{user `source_image`}}",
 			"zone": "europe-west1-b",
 			"ssh_username": "appuser",
-			"machine_type": "{{user `machine_type`}}",
-			"tags": ["http-server"]
+			"machine_type": "{{user `machine_type`}}"
 		}
 	],
 	"provisioners": [
 		{
 			"type": "file",
-			"source": "files/mongodb.service",
+			"source": "./files/mongodb.service",
 			"destination": "/tmp/mongodb.service"
 		},
 		{

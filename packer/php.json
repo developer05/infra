@@ -1,6 +1,6 @@
 {
 	"variables": {
-		"project_id": "otus-devops-200205",
+		"project_id": "infra-200312",
 		"source_image": "ubuntu-1604-xenial-v20180323",
 		"machine_type": "f1-micro"
 	},
@@ -18,13 +18,8 @@
 	],
 	"provisioners": [
 		{
-			"type": "file",
-			"source": "files/mongodb.service",
-			"destination": "/tmp/mongodb.service"
-		},
-		{
 			"type": "shell",
-			"script": "scripts/install_mongodb.sh"
+			"script": "scripts/install_php.sh"
 		}
 	]
 }
