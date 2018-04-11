@@ -1,8 +1,3 @@
-provider "google" {
-  project = "${var.project}"
-  region  = "${var.region}"
-}
-
 resource "google_compute_instance" "app" {
   name         = "catalog-app"
   machine_type = "f1-micro"
@@ -11,13 +6,15 @@ resource "google_compute_instance" "app" {
 
   "boot_disk" {
     initialize_params {
-      image = "${var.disk_image}"
+      image = "${var.app_disk_image}"
     }
   }
 
   "network_interface" {
     network       = "default"
-    access_config = {}
+    access_config = {
+      nat_ip = "${google_compute_address.catalog_app_ip.address}"
+    }
   }
 
   metadata {
@@ -32,12 +29,12 @@ resource "google_compute_instance" "app" {
   }
 
   provisioner "file" {
-    source      = "files/catalog.service"
+    source      = "${path.module}/files/catalog.service"
     destination = "/tmp/catalog.service"
   }
 
   provisioner "remote-exec" {
-    script = "files/deploy.sh"
+    script = "${path.module}/files/deploy.sh"
   }
 }
 
@@ -52,4 +49,8 @@ resource "google_compute_firewall" "firewall_catalog" {
 
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["catalog-app"]
+}
+
+resource "google_compute_address" "catalog_app_ip" {
+  name = "catalog-app-ip"
 }

@@ -1,14 +1,5 @@
-variable "project" {
-  description = "Project ID"
-}
-
-variable "region" {
-  description = "Region"
-  default     = "europe-west1"
-}
-
-variable "disk_image" {
-  description = "Disc image"
+variable app_disk_image {
+  description = "Disk image for app"
 }
 
 variable "public_key_path" {
